@@ -39,9 +39,16 @@ const dataset = [
 app.get('/homepage',(req,res) => {
     console.log("At homepage!");
     res.render('homepage',{dataset});
-})
+});
 
+app.get('/edit',(req, res) => {
+    res.send('Edit user info');
+});
+
+app.get('/delete', (req,res) => {
+    res.send('Delete user info');
+});
 
 app.listen(3000, () => {
     console.log("At port 3000!");
-})
+});
