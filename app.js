@@ -49,6 +49,10 @@ app.get('/delete', (req,res) => {
     res.send('Delete user info');
 });
 
+app.get('/new', (req, res) => {
+    res.send('Add new user');
+});
+
 app.listen(3000, () => {
     console.log("At port 3000!");
 });
