@@ -66,7 +66,7 @@ app.put('/edit/:id', async(req, res) => { //Update edited info into the db
     }
 });
 
-app.delete('/delete/:id', async(req,res) => {
+app.delete('/delete/:id', async(req,res) => { //Delete user 
     const uid = req.params.id;
     try{
        await User.findByIdAndRemove(uid);
@@ -81,9 +81,24 @@ app.delete('/delete/:id', async(req,res) => {
 
 });
 
-app.get('/new', (req, res) => {
+app.get('/new', (req, res) => { //Request form for new user input
+    console.log("get request for new insertion of user");
     res.render('create');
 });
+
+app.post('/new', async(req,res) => {
+    console.log(req.body);
+    try{
+    const userLatest = new User(req.body);
+    await userLatest.save();
+    console.log("Successfully inserted new user!");
+    res.redirect('/homepage');
+    }
+    catch(err)
+    {
+        console.log("Error while inserting new user to the database");
+    }
+})
 
 app.listen(3000, () => {
     console.log("At port 3000!");
