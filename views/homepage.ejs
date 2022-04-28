@@ -15,14 +15,14 @@
           <th>Email</th>
           <th>Phone</th>
         </tr>
-        <% for(let obj of dataset){ %>
+        <% for(let obj of userData){ %>
         <tr>
           <td><%= obj.firstName %> </td>
           <td><%= obj.lastName %> </td>
           <td><%= obj.email %> </td>
           <td><%= obj.phone %> </td>
           <td>
-            <a href="/edit">
+            <a href="/edit/<%= obj["_id"] %>">
             <button>Edit</button>
             </a>
           </td>
