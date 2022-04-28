@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Edit user data</h2>
-    <form> 
+    <form method ="post" action = "/edit/<%= userDetails._id %>?_method=PUT"> 
        <label>First Name :</label> <input type="text" name="firstName" value="<%= userDetails.firstName %> "><br>
        <label>Last Name :</label> <input type="text" name="lastName" value="<%= userDetails.lastName %> "> <br>
        <label>Email :</label> <input type="text" name="email" value="<%= userDetails.email %> "> <br>

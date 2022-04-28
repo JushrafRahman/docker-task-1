@@ -27,9 +27,8 @@
             </a>
           </td>
           <td>
-            <a href="/delete">
-              <button>Delete</button>
-            </a>
+            <form action="/delete/<%= obj._id%>?_method=delete" method="post">
+              <button>Delete</button></form>
           </td>
         </tr>
         <% } %>

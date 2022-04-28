@@ -32,8 +32,8 @@ app.get('/homepage',async(req,res) => { //view all user data
     }
 });
 
-app.get('/edit/:id',async(req, res) => {
-    const uid = req.params.id;
+app.get('/edit/:id',async(req, res) => { //Edit user info
+    const uid = req.params.id; 
     try{
     const userDetails = await User.findById(uid);
     console.log(userDetails);
@@ -46,8 +46,39 @@ app.get('/edit/:id',async(req, res) => {
     }
 });
 
-app.get('/delete/:id', (req,res) => {
-    res.render('delete');
+app.put('/edit/:id', async(req, res) => { //Update edited info into the db
+    const uid = req.params.id;
+    const {firstName,lastName,email,phone} = req.body;
+    try{
+      const updatedVal = await User.findByIdAndUpdate(uid,{
+          firstName : firstName,
+          lastName : lastName,
+          email : email,
+          phone : phone
+      });
+      console.log("Update successfull in db");
+      res.redirect('/homepage');
+    }
+    catch(err)
+    {
+
+        console.log("Update failed in db");
+    }
+});
+
+app.delete('/delete/:id', async(req,res) => {
+    const uid = req.params.id;
+    try{
+       await User.findByIdAndRemove(uid);
+       console.log("Successfully deleted!");
+       res.redirect('/homepage');
+
+    }
+    catch(err)
+    {
+        console.log("error while deleting");
+    }
+
 });
 
 app.get('/new', (req, res) => {
