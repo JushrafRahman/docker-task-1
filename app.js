@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
+const connectDB = require('./backend/connection');
 const path = require('path');
+const mongoose = require('mongoose');
+
+const User = require('./models/user');
+
+connectDB(); //connect to the db
+
 const methodOverride = require('method-override');
 
 app.use(express.urlencoded({extended : true}));
@@ -10,47 +17,41 @@ app.use(methodOverride('_method'));
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
-const dataset = [
+app.get('/',(req,res) => {
+    res.send("Go to /homepage endpoint");
+});
+
+app.get('/homepage',async(req,res) => { //view all user data
+    try{
+        const userData  = await User.find(); //fetch all user data
+        res.render('homepage',{userData});
+
+    }catch(err)
     {
-        firstName : "Jushraf",
-        lastName : "Chowdhury",
-        email : "jushrafrahi97@gmail.com",
-        phone : "12345"
-    },
-    {
-        firstName : "Mason",
-        lastName : "Mount",
-        email : "moneymase@gmail.com",
-        phone : "987"
-    },
-    {
-        firstName : "Declan",
-        lastName : "Rice",
-        email : "deccers@gmail.com",
-        phone : "41"
-    },
-    {
-        firstName : "John",
-        lastName : "Terry",
-        email : "cap@gmail.com",
-        phone : "26"
+        console.log(`Error inside get/homepage while fetching data : ${err}`);
     }
-];
-app.get('/homepage',(req,res) => {
-    console.log("At homepage!");
-    res.render('homepage',{dataset});
 });
 
-app.get('/edit',(req, res) => {
-    res.send('Edit user info');
+app.get('/edit/:id',async(req, res) => {
+    const uid = req.params.id;
+    try{
+    const userDetails = await User.findById(uid);
+    console.log(userDetails);
+    res.render('edit',{userDetails});
+
+    }
+    catch(err)
+    {
+        console.log("Error while editing!");
+    }
 });
 
-app.get('/delete', (req,res) => {
-    res.send('Delete user info');
+app.get('/delete/:id', (req,res) => {
+    res.render('delete');
 });
 
 app.get('/new', (req, res) => {
-    res.send('Add new user');
+    res.render('create');
 });
 
 app.listen(3000, () => {
