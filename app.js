@@ -18,7 +18,7 @@ app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
 app.get('/',(req,res) => {
-    res.send("Go to /homepage endpoint");
+    res.redirect('/homepage');
 });
 
 app.get('/homepage',async(req,res) => { //view all user data
